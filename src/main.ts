@@ -1,4 +1,6 @@
 import "cubing/twisty";
+// @ts-ignore
+import Cube from "cubejs";
 import { Alg } from "cubing/alg";
 import type { CubeColors } from "./cubeState";
 import {
@@ -149,7 +151,6 @@ function updateStateForOrientation() {
 }
 
 // ─── Scramble ───
-// Import cubejs on demand to avoid blocking initial page load
 let solverInitialized = false;
 
 async function generateScramble() {
@@ -157,16 +158,12 @@ async function generateScramble() {
   btnScramble.textContent = "Đang tạo...";
 
   try {
-    // Dynamic import to avoid chunking issues and blocking the main thread on load
-    // @ts-ignore
-    const Cube = (await import("cubejs")).default;
-    
     if (!solverInitialized) {
       Cube.initSolver();
       solverInitialized = true;
     }
     
-    // Generates a true random-state WCA-compliant scramble (approx 20-22 moves)
+    // Generates a true random-state WCA-compliant scramble
     currentScrambleStr = Cube.scramble();
     scrambleText.textContent = currentScrambleStr;
 
