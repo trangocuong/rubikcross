@@ -149,36 +149,25 @@ function updateStateForOrientation() {
 }
 
 // ─── Scramble ───
-function generateRandomScrambleStr(): string {
-  const faces = ["U", "D", "L", "R", "F", "B"];
-  const modifiers = ["", "'", "2"];
-  const scramble: string[] = [];
-  let lastFace = -1;
-  let secondLastFace = -1;
-
-  for (let i = 0; i < 20; i++) {
-    let face;
-    do {
-      face = Math.floor(Math.random() * faces.length);
-    } while (
-      face === lastFace || 
-      (face === secondLastFace && Math.floor(face / 2) === Math.floor(lastFace / 2))
-    );
-    
-    const modifier = modifiers[Math.floor(Math.random() * modifiers.length)];
-    scramble.push(faces[face] + modifier);
-    secondLastFace = lastFace;
-    lastFace = face;
-  }
-  return scramble.join(" ");
-}
+// Import cubejs on demand to avoid blocking initial page load
+let solverInitialized = false;
 
 async function generateScramble() {
   btnScramble.disabled = true;
   btnScramble.textContent = "Đang tạo...";
 
   try {
-    currentScrambleStr = generateRandomScrambleStr();
+    // Dynamic import to avoid chunking issues and blocking the main thread on load
+    // @ts-ignore
+    const Cube = (await import("cubejs")).default;
+    
+    if (!solverInitialized) {
+      Cube.initSolver();
+      solverInitialized = true;
+    }
+    
+    // Generates a true random-state WCA-compliant scramble (approx 20-22 moves)
+    currentScrambleStr = Cube.scramble();
     scrambleText.textContent = currentScrambleStr;
 
     userSolutionInput.value = "";
