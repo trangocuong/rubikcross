@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ứng dụng luyện tập giải Cross Rubik's Cube theo phương pháp CFOP. Tạo scramble, tự nhập công thức giải, kiểm tra và so sánh với đáp án tối ưu." />
+    <title>CFOP Cross Trainer - Luyện tập giải Rubik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <h1>CFOP Cross Trainer</h1>
+        <p>Luyện tập giải Cross nhanh nhất có thể</p>
+      </header>
+
+      <main>
+        <section class="controls">
+          <button id="btn-scramble" class="primary-btn">Tạo Scramble</button>
+          
+          <div class="color-picker-group">
+            <label>Màu Cross:</label>
+            <div class="color-options" id="cross-color-options">
+              <button class="color-btn active" data-color="white" style="background-color: #ffffff;"></button>
+              <button class="color-btn" data-color="yellow" style="background-color: #ffd500;"></button>
+            </div>
+          </div>
+          
+          <div class="custom-scramble-group" style="margin-top: 20px;">
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="custom-scramble-input" class="neo-input" placeholder="Hoặc dán Scramble tự chọn vào đây..." autocomplete="off" style="flex: 1;" />
+              <button id="btn-apply-scramble" class="secondary-btn">Áp dụng</button>
+            </div>
+            <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 0.85em; color: #a1a1aa; cursor: pointer;">
+              <input type="checkbox" id="cb-pre-oriented" />
+              <span>Scramble dành riêng cho Đáy này (Xoay khối Rubik TRƯỚC khi Scramble)</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="scramble-display">
+          <div id="scramble-text">Nhấn "Tạo Scramble" để bắt đầu</div>
+        </section>
+
+        <section class="cube-view">
+          <!-- Twisty player from cubing.js -->
+          <twisty-player id="player" visualization="3D" background="none" control-panel="none"></twisty-player>
+        </section>
+
+        <section class="exercise-mode">
+          <h2>Bài Tập: Nhập công thức Cross của bạn</h2>
+          <p id="orientation-indicator" class="text-sm text-gray-400 mb-2 italic opacity-80" style="margin-bottom: 10px; font-style: italic; color: #a1a1aa;">(Mặc định: Đáy Trắng, Trước Xanh lá)</p>
+          <div class="input-group">
+            <input type="text" id="user-solution" placeholder="Vd: y R U R' D2..." autocomplete="off">
+            <button id="btn-play-solution" class="secondary-btn" title="Chạy thử nghiệm trên 3D">▶ Chạy thử</button>
+            <button id="btn-check-solution" class="primary-btn">Kiểm tra</button>
+          </div>
+          <div id="feedback-message" class="feedback hidden"></div>
+        </section>
+
+        <section class="optimal-solution">
+          <button id="btn-show-optimal" class="ghost-btn">Xem gợi ý toàn diện (Phân tích Trắng/Vàng)</button>
+          
+          <div id="optimal-solution-container" class="hidden">
+            <h3 style="text-align: center; margin-bottom: 1rem; color: #a1a1aa;">Phân tích Tối ưu Trắng/Vàng</h3>
+            <div id="optimal-solution-grid" class="optimal-grid">
+              <!-- Grid items will be injected here via JS -->
+            </div>
+            <div style="text-align: center; margin-top: 1rem; font-size: 0.9em; color: #666;">
+              Nhấn "▶ Chạy thử" để xem cách giải trực tiếp trên 3D
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
