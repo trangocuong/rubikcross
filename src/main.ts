@@ -1,6 +1,6 @@
 import "cubing/twisty";
 // @ts-ignore
-import Cube from "cubejs";
+import scrambleGen from "scramble-generator";
 import { Alg } from "cubing/alg";
 import type { CubeColors } from "./cubeState";
 import {
@@ -151,20 +151,13 @@ function updateStateForOrientation() {
 }
 
 // ─── Scramble ───
-let solverInitialized = false;
-
 async function generateScramble() {
   btnScramble.disabled = true;
   btnScramble.textContent = "Đang tạo...";
 
   try {
-    if (!solverInitialized) {
-      Cube.initSolver();
-      solverInitialized = true;
-    }
-    
-    // Generates a true random-state WCA-compliant scramble
-    currentScrambleStr = Cube.scramble();
+    const generate = scrambleGen.default || scrambleGen;
+    currentScrambleStr = generate();
     scrambleText.textContent = currentScrambleStr;
 
     userSolutionInput.value = "";
