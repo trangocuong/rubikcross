@@ -45,7 +45,7 @@ function isRedundant(lastFace: string, newFace: string): boolean {
  */
 export async function solveCross(
   scrambledCube: CubeColors,
-  crossFace: string,
+  crossFace: number,
   maxDepth: number = 8
 ): Promise<string | null> {
 
@@ -66,7 +66,7 @@ export async function solveCross(
 
 function dfs(
   cube: CubeColors,
-  crossFace: string,
+  crossFace: number,
   depthRemaining: number,
   lastFace: string,
   movesSoFar: string[]
