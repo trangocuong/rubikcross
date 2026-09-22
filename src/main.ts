@@ -1,5 +1,4 @@
 import "cubing/twisty";
-import { randomScrambleForEvent } from "cubing/scramble";
 import { Alg } from "cubing/alg";
 import type { CubeColors } from "./cubeState";
 import {
@@ -149,13 +148,37 @@ function updateStateForOrientation() {
   updateOptimalSolution();
 }
 
+// ─── Scramble ───
+function generateRandomScrambleStr(): string {
+  const faces = ["U", "D", "L", "R", "F", "B"];
+  const modifiers = ["", "'", "2"];
+  const scramble: string[] = [];
+  let lastFace = -1;
+  let secondLastFace = -1;
+
+  for (let i = 0; i < 20; i++) {
+    let face;
+    do {
+      face = Math.floor(Math.random() * faces.length);
+    } while (
+      face === lastFace || 
+      (face === secondLastFace && Math.floor(face / 2) === Math.floor(lastFace / 2))
+    );
+    
+    const modifier = modifiers[Math.floor(Math.random() * modifiers.length)];
+    scramble.push(faces[face] + modifier);
+    secondLastFace = lastFace;
+    lastFace = face;
+  }
+  return scramble.join(" ");
+}
+
 async function generateScramble() {
   btnScramble.disabled = true;
   btnScramble.textContent = "Đang tạo...";
 
   try {
-    const scrambleAlg = await randomScrambleForEvent("333");
-    currentScrambleStr = scrambleAlg.toString();
+    currentScrambleStr = generateRandomScrambleStr();
     scrambleText.textContent = currentScrambleStr;
 
     userSolutionInput.value = "";
