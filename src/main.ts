@@ -26,6 +26,8 @@ const feedbackMsg = document.querySelector("#feedback-message") as HTMLDivElemen
 const btnShowOptimal = document.querySelector("#btn-show-optimal") as HTMLButtonElement;
 const optimalContainer = document.querySelector("#optimal-solution-container") as HTMLDivElement;
 const optimalGrid = document.querySelector("#optimal-solution-grid") as HTMLDivElement;
+const virtualKeyboard = document.querySelector("#virtual-keyboard") as HTMLDivElement;
+const vkBtns = document.querySelectorAll(".vk-btn") as NodeListOf<HTMLButtonElement>;
 // Setup global function for play buttons
 (window as any).playHintAlg = function(algStr: string, color: string) {
   if (!currentScrambleStr) return;
@@ -109,6 +111,25 @@ function init() {
       updateStateForOrientation();
     });
   });
+
+  // Virtual Keyboard
+  vkBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const action = btn.getAttribute("data-action");
+      if (action === "backspace") {
+        let val = userSolutionInput.value;
+        if (val.endsWith(" ")) val = val.slice(0, -1);
+        val = val.replace(/[^\s]+$/, ""); // delete last word
+        if (val && !val.endsWith(" ")) val += " ";
+        userSolutionInput.value = val;
+      } else if (action === "space") {
+        userSolutionInput.value += " ";
+      } else {
+        userSolutionInput.value += btn.textContent + " ";
+      }
+      userSolutionInput.focus();
+    });
+  });
 }
 
 // ─── Orientation Logic ───
@@ -164,6 +185,7 @@ async function generateScramble() {
 
     userSolutionInput.value = "";
     feedbackMsg.classList.add("hidden");
+    virtualKeyboard.classList.remove("hidden");
     optimalContainer.classList.add("hidden");
     btnShowOptimal.classList.remove("hidden");
     btnShowOptimal.textContent = "Xem gợi ý toàn diện (Phân tích Trắng/Vàng)";
@@ -192,6 +214,7 @@ function applyCustomScramble() {
 
     userSolutionInput.value = "";
     feedbackMsg.classList.add("hidden");
+    virtualKeyboard.classList.remove("hidden");
     optimalContainer.classList.add("hidden");
     btnShowOptimal.classList.remove("hidden");
     btnShowOptimal.textContent = "Xem gợi ý toàn diện (Phân tích Trắng/Vàng)";
