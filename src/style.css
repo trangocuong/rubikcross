@@ -468,49 +468,48 @@ input[type="text"]::placeholder {
     grid-template-columns: 1fr;
   }
 }
- / *   V i r t u a l   K e y b o a r d   * / 
- . v i r t u a l - k e y b o a r d   { 
-     d i s p l a y :   f l e x ; 
-     f l e x - d i r e c t i o n :   c o l u m n ; 
-     g a p :   8 p x ; 
-     m a r g i n - t o p :   1 5 p x ; 
-     p a d d i n g :   1 5 p x ; 
-     b a c k g r o u n d - c o l o r :   r g b a ( 3 0 ,   4 1 ,   5 9 ,   0 . 5 ) ; 
-     b o r d e r :   1 p x   s o l i d   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 1 ) ; 
-     b o r d e r - r a d i u s :   1 2 p x ; 
- } 
- . v k - r o w   { 
-     d i s p l a y :   f l e x ; 
-     g a p :   8 p x ; 
-     j u s t i f y - c o n t e n t :   c e n t e r ; 
- } 
- . v k - b t n   { 
-     f l e x :   1 ; 
-     p a d d i n g :   1 0 p x   0 ; 
-     b a c k g r o u n d - c o l o r :   # 3 3 4 1 5 5 ; 
-     b o r d e r :   1 p x   s o l i d   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 1 ) ; 
-     b o r d e r - r a d i u s :   8 p x ; 
-     c o l o r :   # f 8 f a f c ; 
-     f o n t - f a m i l y :   " J e t B r a i n s   M o n o " ,   m o n o s p a c e ; 
-     f o n t - w e i g h t :   6 0 0 ; 
-     f o n t - s i z e :   1 r e m ; 
-     c u r s o r :   p o i n t e r ; 
-     t r a n s i t i o n :   a l l   0 . 2 s   e a s e ; 
- } 
- . v k - b t n : h o v e r   { 
-     b a c k g r o u n d - c o l o r :   # 4 7 5 5 6 9 ; 
-     t r a n s f o r m :   t r a n s l a t e Y ( - 2 p x ) ; 
- } 
- . v k - b t n : a c t i v e   { 
-     t r a n s f o r m :   t r a n s l a t e Y ( 1 p x ) ; 
-     b a c k g r o u n d - c o l o r :   # 8 b 5 c f 6 ; 
- } 
- . v k - a c t i o n   { 
-     b a c k g r o u n d - c o l o r :   # 1 e 2 9 3 b ; 
-     f l e x :   2 ; 
- } 
- . v i r t u a l - k e y b o a r d . h i d d e n   { 
-     d i s p l a y :   n o n e ; 
- } 
-  
- 
+/* Virtual Keyboard */
+.virtual-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 15px;
+  background-color: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+.vk-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.vk-btn {
+  flex: 1;
+  padding: 10px 0;
+  background-color: #334155;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #f8fafc;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.vk-btn:hover {
+  background-color: #475569;
+  transform: translateY(-2px);
+}
+.vk-btn:active {
+  transform: translateY(1px);
+  background-color: #8b5cf6;
+}
+.vk-action {
+  background-color: #1e293b;
+  flex: 2;
+}
+.virtual-keyboard.hidden {
+  display: none;
+}
+
