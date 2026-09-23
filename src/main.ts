@@ -20,6 +20,7 @@ const cbPreOriented = document.querySelector("#cb-pre-oriented") as HTMLInputEle
 const colorOptions = document.querySelectorAll(".color-btn");
 const userSolutionInput = document.querySelector("#user-solution") as HTMLInputElement;
 const btnPlaySolution = document.querySelector("#btn-play-solution") as HTMLButtonElement;
+const btnResetSolution = document.querySelector("#btn-reset-solution") as HTMLButtonElement;
 const btnCheckSolution = document.querySelector("#btn-check-solution") as HTMLButtonElement;
 const feedbackMsg = document.querySelector("#feedback-message") as HTMLDivElement;
 const btnShowOptimal = document.querySelector("#btn-show-optimal") as HTMLButtonElement;
@@ -92,6 +93,7 @@ function init() {
   cbPreOriented.addEventListener("change", updateStateForOrientation);
   btnCheckSolution.addEventListener("click", checkUserSolution);
   btnPlaySolution.addEventListener("click", playUserSolution);
+  btnResetSolution.addEventListener("click", resetSolution);
   
   btnShowOptimal.addEventListener("click", () => {
     optimalContainer.classList.remove("hidden");
@@ -214,6 +216,14 @@ function playUserSolution() {
   } catch {
     showFeedback("Công thức không hợp lệ. Vui lòng kiểm tra lại (VD: y R U R' D2).", "error");
   }
+}
+
+// ─── Reset Solution ───
+function resetSolution() {
+  if (!currentScrambleStr) return;
+  userSolutionInput.value = "";
+  feedbackMsg.classList.add("hidden");
+  updateStateForOrientation();
 }
 
 // ─── Check user solution ───
